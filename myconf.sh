@@ -3,7 +3,7 @@
 # On systems with wget (e.g. Debian) run the following command:
 #  /bin/sh -c "$(wget -q -O - -- https://raw.githubusercontent.com/jamespole/myconf/main/myconf.sh)"
 #
-# On systems with curl (e.g. macOS) run the following command:
+# On systems with curl (e.g. Arch, macOS) run the following command:
 #   /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/jamespole/myconf/main/myconf.sh)"
 #
 
