@@ -6,4 +6,6 @@
 
 if [ "$(uname)" == 'Darwin' ]; then
     echo 'INFO: Assuming macOS installation.'
+    brew update
+    brew upgrade
 fi
