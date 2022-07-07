@@ -11,12 +11,14 @@ if [ "$(uname)" = 'Darwin' ]; then
     echo 'INFO: Assuming macOS.'
     brew update
     brew upgrade
-    brew install \
-        bash \
-        borgbackup \
-        ffmpeg \
-        shellcheck \
-        vim
+    for brew_package in bash borgbackup ffmpeg shellcheck vim; do
+        if brew list "$brew_package" > /dev/null 2>&1; then
+            echo "INFO: Homebrew package <${brew_package}> already installed. Skipping."
+        else
+            echo "ACTION: Installing Homebrew package <${brew_package}>."
+            brew install "$brew_package"
+        fi
+    done
 elif [ -f '/etc/debian_version' ]; then
     echo 'INFO: Assuming Debian.'
     sudo apt update
