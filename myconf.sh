@@ -43,6 +43,9 @@ elif [ -f '/etc/debian_version' ]; then
     echo 'INFO: Assuming Debian.'
     sudo apt update
     sudo apt upgrade
+elif [ -f '/etc/arch-release' ]; then
+    echo 'INFO: Assuming Arch.'
+    sudo pacman -Syu
 else
     echo 'ERROR: Could not detect operating system.' && exit 1
 fi
