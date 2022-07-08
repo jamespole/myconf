@@ -31,7 +31,7 @@ if [ "$(uname)" = 'Darwin' ]; then
     echo 'INFO: Assuming macOS.'
     brew update
     brew upgrade
-    for brew_package in bash borgbackup ffmpeg shellcheck vim; do
+    for brew_package in bash borgbackup fdupes ffmpeg jhead rclone rmlint shellcheck vim; do
         if brew list "$brew_package" > /dev/null 2>&1; then
             echo "INFO: Homebrew package <${brew_package}> already installed. Skipping."
         else
@@ -46,3 +46,5 @@ elif [ -f '/etc/debian_version' ]; then
 else
     echo 'ERROR: Could not detect operating system.' && exit 1
 fi
+
+echo 'INFO: Finished.'
