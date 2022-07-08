@@ -7,6 +7,10 @@
 #   /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/jamespole/myconf/main/myconf.sh)"
 #
 
+if [ "$(id -u)" -eq 0 ]; then
+    echo 'ERROR: Do not execute this script as root.' && exit 1
+fi
+
 if [ "$(uname)" = 'Darwin' ]; then
     echo 'INFO: Assuming macOS.'
     brew update
