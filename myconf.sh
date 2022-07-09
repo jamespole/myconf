@@ -25,12 +25,20 @@
 
 if [ "$(id -u)" -eq 0 ]; then echo 'ERROR: Do not execute this script as root.' && exit 1; fi
 
+#
+# Detect system
+#
+
 if [ "$(uname)" = 'Darwin' ]; then system='macOS'
 elif [ -f '/etc/debian_version' ]; then system='Debian'
 elif [ -f '/etc/arch-release' ]; then system='Arch'
 else echo 'ERROR: Could not detect operating system.' && exit 1; fi
 
 echo "INFO: Detected system is <${system}>."
+
+#
+# Upgrade and install packages
+#
 
 if [ "${system}" = 'Debian' ]; then
     sudo apt update || exit 2
@@ -55,6 +63,10 @@ elif [ "${system}" = 'Arch' ]; then
     sudo pacman -Syu || exit 2
 fi
 
+#
+# Install VIM configuration
+#
+
 cat > ~/.vimrc << EOF
 filetype plugin indent on
 set expandtab
@@ -67,10 +79,22 @@ set tabstop=4
 syntax on
 EOF
 
-if command -v wget &> /dev/null; then
-    wget -O '/home/james/.ssh/authorized_keys' -- 'https://github.com/jamespole.keys'
-elif command -v curl &> /dev/null; then
-    curl 'https://github.com/jamespole.keys' -o '/home/james/.ssh/authorized_keys'
+#
+# Install SSH keys
+#
+
+keys_source='https://github.com/jamespole.keys'
+keys_target='/home/james/.ssh/authorized_keys'
+if command -v wget > /dev/null 2>&1 ; then
+    wget -O "${keys_target}" -- "${keys_source}" || exit 2
+elif command -v curl > /dev/null 2>&1 ; then
+    curl "${keys_source}" -o "${keys_target}" || exit 2
+else
+    echo 'ERROR: Could not detect wget or curl commands.' && exit 1
 fi
+
+#
+# Finished
+#
 
 echo 'INFO: Finished.'
