@@ -50,4 +50,16 @@ elif [ "${system}" = 'Arch' ]; then
     sudo pacman -Syu || exit 2
 fi
 
+cat > ~/.vimrc << EOF
+filetype plugin indent on
+set expandtab
+set ruler
+set scrolloff=5
+set shiftwidth=4
+set showcmd
+set softtabstop=4
+set tabstop=4
+syntax on
+EOF
+
 echo 'INFO: Finished.'
