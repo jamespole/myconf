@@ -84,7 +84,7 @@ EOF
 #
 
 keys_source='https://github.com/jamespole.keys'
-keys_target='/home/james/.ssh/authorized_keys'
+keys_target="$HOME/.ssh/authorized_keys"
 if command -v wget > /dev/null 2>&1 ; then
     wget -O "${keys_target}" -- "${keys_source}" || exit 2
 elif command -v curl > /dev/null 2>&1 ; then
