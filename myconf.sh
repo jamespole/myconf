@@ -23,31 +23,31 @@
 #   /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/jamespole/myconf/main/myconf.sh)"
 #
 
-if [ "$(id -u)" -eq 0 ]; then
-    echo 'ERROR: Do not execute this script as root.' && exit 1
-fi
+if [ "$(id -u)" -eq 0 ]; then echo 'ERROR: Do not execute this script as root.' && exit 1; fi
 
-if [ "$(uname)" = 'Darwin' ]; then
-    echo 'INFO: Assuming macOS.'
-    brew update
-    brew upgrade
+if [ "$(uname)" = 'Darwin' ]; then system='macOS'
+elif [ -f '/etc/debian_version' ]; then system='Debian'
+elif [ -f '/etc/arch-release' ]; then system='Arch'
+else echo 'ERROR: Could not detect operating system.' && exit 1; fi
+
+echo "INFO: Detected system is <${system}>."
+
+if [ "${system}" = 'Debian' ]; then
+    sudo apt update || exit 2
+    sudo apt upgrade || exit 2
+elif [ "${system}" = 'macOS' ]; then
+    brew update || exit 2
+    brew upgrade || exit 2
     for brew_package in bash borgbackup fdupes ffmpeg jhead rclone rmlint shellcheck vim; do
         if brew list "$brew_package" > /dev/null 2>&1; then
             echo "INFO: Homebrew package <${brew_package}> already installed. Skipping."
         else
             echo "ACTION: Installing Homebrew package <${brew_package}>."
-            brew install "$brew_package"
+            brew install "$brew_package" || exit 2
         fi
     done
-elif [ -f '/etc/debian_version' ]; then
-    echo 'INFO: Assuming Debian.'
-    sudo apt update
-    sudo apt upgrade
-elif [ -f '/etc/arch-release' ]; then
-    echo 'INFO: Assuming Arch.'
-    sudo pacman -Syu
-else
-    echo 'ERROR: Could not detect operating system.' && exit 1
+elif [ "${system}" = 'Arch' ]; then
+    sudo pacman -Syu || exit 2
 fi
 
 echo 'INFO: Finished.'
