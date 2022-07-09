@@ -35,6 +35,7 @@ echo "INFO: Detected system is <${system}>."
 if [ "${system}" = 'Debian' ]; then
     sudo apt update || exit 2
     sudo apt upgrade || exit 2
+    sudo apt autoremove || exit 2
 elif [ "${system}" = 'macOS' ]; then
     brew update || exit 2
     brew upgrade || exit 2
