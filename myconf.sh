@@ -51,7 +51,7 @@ elif [ "${system}" = 'macOS' ]; then
             # shellcheck disable=SC2086
             brew uninstall ${unneeded_package} || exit 2
         else
-            echo "INFO: Homebrew package <${brew_package}> not installed. Skipping."
+            echo "INFO: Homebrew package <${unneeded_package}> not installed. Skipping."
         fi
     done
 elif [ "${system}" = 'Arch' ]; then
@@ -118,17 +118,13 @@ EOF
 
 cat > ~/.bashrc << EOF
 [[ $- != *i* ]] && return
-HISTCONTROL=ignoreboth
-HISTSIZE=1000
-HISTFILESIZE=2000
 
-shopt -s autocd
-shopt -s cdspell
 shopt -s checkwinsize
 shopt -s histappend
 
-EDITOR=vim; export EDITOR
-PAGER=less; export PAGER
+export BASH_SILENCE_DEPRECATION_WARNING=1
+export EDITOR=vim
+export PAGER=less
 
 alias more="less"
 alias vi="vim"
