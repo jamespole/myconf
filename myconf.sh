@@ -62,12 +62,11 @@ elif [ "${system}" = 'macOS' ]; then
     done
 elif [ "${system}" = 'Arch' ]; then
     sudo pacman -Syu || exit 2
-    # NOTE: Do not install shellcheck on Arch. It installs too many dependencies.
+    # NOTE: Do not install {ffmpeg,shellcheck} on Arch. It installs too many dependencies.
     sudo pacman -S --needed \
         bash \
         borg \
         fdupes \
-        ffmpeg \
         jhead \
         rclone \
         rmlint \
