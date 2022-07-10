@@ -37,12 +37,41 @@ else echo 'ERROR: Could not detect operating system.' && exit 1; fi
 echo "INFO: Detected system is <${system}>."
 
 #
-# Upgrade and install packages
+# Remove unneeded packages
+#
+
+unneeded_packages='jdupes rclone rmlint'
+
+if [ "${system}" = 'Debian' ]; then
+    # shellcheck disable=SC2086
+    sudo apt remove ${unneeded_packages} || exit 2
+elif [ "${system}" = 'macOS' ]; then
+    # shellcheck disable=SC2086
+    brew uninstall ${unneeded_packages} || exit 2
+elif [ "${system}" = 'Arch' ]; then
+    # shellcheck disable=SC2086
+    sudo pacman -Rs ${unneeded_packages} || exit 2
+fi
+
+#
+# Upgrade packages
 #
 
 if [ "${system}" = 'Debian' ]; then
     sudo apt update || exit 2
     sudo apt upgrade || exit 2
+elif [ "${system}" = 'macOS' ]; then
+    brew update || exit 2
+    brew upgrade || exit 2
+elif [ "${system}" = 'Arch' ]; then
+    sudo pacman -Syu || exit 2
+fi
+
+#
+# Install packages
+#
+
+if [ "${system}" = 'Debian' ]; then
     sudo apt install -y \
         rsync \
         shellcheck \
@@ -50,9 +79,6 @@ if [ "${system}" = 'Debian' ]; then
         || exit 2
     sudo apt autoremove -y || exit 2
 elif [ "${system}" = 'macOS' ]; then
-    brew uninstall jdupes rclone rmlint || exit 2
-    brew update || exit 2
-    brew upgrade || exit 2
     for brew_package in bash borgbackup fdupes ffmpeg jhead rsync shellcheck vim; do
         if brew list "$brew_package" > /dev/null 2>&1; then
             echo "INFO: Homebrew package <${brew_package}> already installed. Skipping."
@@ -62,7 +88,6 @@ elif [ "${system}" = 'macOS' ]; then
         fi
     done
 elif [ "${system}" = 'Arch' ]; then
-    sudo pacman -Syu || exit 2
     # NOTE: Do not install {ffmpeg,shellcheck} on Arch. It installs too many dependencies.
     sudo pacman -S --needed \
         bash \
@@ -70,6 +95,7 @@ elif [ "${system}" = 'Arch' ]; then
         fdupes \
         jhead \
         rsync \
+        sudo \
         vim \
         || exit 2
 fi
