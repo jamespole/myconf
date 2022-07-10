@@ -62,6 +62,7 @@ elif [ "${system}" = 'macOS' ]; then
     done
 elif [ "${system}" = 'Arch' ]; then
     sudo pacman -Syu || exit 2
+    # NOTE: Do not install shellcheck on Arch. It installs too many dependencies.
     sudo pacman -S \
         bash \
         borg \
@@ -71,7 +72,6 @@ elif [ "${system}" = 'Arch' ]; then
         rclone \
         rmlint \
         rsync \
-        shellcheck \
         vim \
         || exit 2
 fi
