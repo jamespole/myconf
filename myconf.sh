@@ -126,6 +126,7 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 export EDITOR=vim
 export PAGER=less
 
+alias ls="ls -GF"
 alias more="less"
 alias vi="vim"
 alias view="vim"
