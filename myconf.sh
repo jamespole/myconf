@@ -79,7 +79,7 @@ if [ "${system}" = 'Debian' ]; then
         || exit 2
     sudo apt autoremove -y || exit 2
 elif [ "${system}" = 'macOS' ]; then
-    for brew_package in bash borgbackup fdupes ffmpeg jhead rsync shellcheck vim; do
+    for brew_package in borgbackup fdupes ffmpeg jhead rsync shellcheck; do
         if brew list "$brew_package" > /dev/null 2>&1; then
             echo "INFO: Homebrew package <${brew_package}> already installed. Skipping."
         else
@@ -99,6 +99,37 @@ elif [ "${system}" = 'Arch' ]; then
         vim \
         || exit 2
 fi
+
+#
+# Install bash configuration
+#
+
+rm ~/.profile
+
+cat > ~/.bash_profile << EOF
+[[ -f ~/.bashrc ]] && . ~/.bashrc
+EOF
+
+cat > ~/.bashrc << EOF
+[[ $- != *i* ]] && return
+HISTCONTROL=ignoreboth
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+shopt -s autocd
+shopt -s cdspell
+shopt -s checkwinsize
+shopt -s histappend
+
+EDITOR=vim; export EDITOR
+PAGER=less; export PAGER
+
+alias more="less"
+alias vi="vim"
+alias view="vim"
+
+PS1="\[\e[0;1;31m\] [\u@\H] \[\e[34m\]{\w} \[\e[0m\]\n\$ "
+EOF
 
 #
 # Install VIM configuration
