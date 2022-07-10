@@ -110,7 +110,7 @@ fi
 # Install bash configuration
 #
 
-rm ~/.profile
+rm ~/.bash_login ~/.profile
 
 cat > ~/.bash_profile << 'EOF'
 [[ -f ~/.bashrc ]] && . ~/.bashrc
