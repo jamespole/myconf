@@ -44,6 +44,7 @@ if [ "${system}" = 'Debian' ]; then
     sudo apt update || exit 2
     sudo apt upgrade || exit 2
     sudo apt install -y \
+        rsync \
         shellcheck \
         vim \
         || exit 2
@@ -51,7 +52,7 @@ if [ "${system}" = 'Debian' ]; then
 elif [ "${system}" = 'macOS' ]; then
     brew update || exit 2
     brew upgrade || exit 2
-    for brew_package in bash borgbackup fdupes ffmpeg jhead rclone rmlint shellcheck vim; do
+    for brew_package in bash borgbackup fdupes ffmpeg jhead rclone rmlint rsync shellcheck vim; do
         if brew list "$brew_package" > /dev/null 2>&1; then
             echo "INFO: Homebrew package <${brew_package}> already installed. Skipping."
         else
