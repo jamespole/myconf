@@ -62,6 +62,18 @@ elif [ "${system}" = 'macOS' ]; then
     done
 elif [ "${system}" = 'Arch' ]; then
     sudo pacman -Syu || exit 2
+    sudo pacman -S \
+        bash \
+        borg \
+        fdupes \
+        ffmpeg \
+        jhead \
+        rclone \
+        rmlint \
+        rsync \
+        shellcheck \
+        vim \
+        || exit 2
 fi
 
 #
