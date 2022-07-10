@@ -50,6 +50,7 @@ if [ "${system}" = 'Debian' ]; then
         || exit 2
     sudo apt autoremove -y || exit 2
 elif [ "${system}" = 'macOS' ]; then
+    brew uninstall jdupes rclone rmlint || exit 2
     brew update || exit 2
     brew upgrade || exit 2
     for brew_package in bash borgbackup fdupes ffmpeg jhead rsync shellcheck vim; do
