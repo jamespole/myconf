@@ -112,11 +112,11 @@ fi
 
 rm ~/.profile
 
-cat > ~/.bash_profile << EOF
+cat > ~/.bash_profile << 'EOF'
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 EOF
 
-cat > ~/.bashrc << EOF
+cat > ~/.bashrc << 'EOF'
 [[ $- != *i* ]] && return
 
 shopt -s checkwinsize
@@ -137,7 +137,7 @@ EOF
 # Install VIM configuration
 #
 
-cat > ~/.vimrc << EOF
+cat > ~/.vimrc << 'EOF'
 filetype plugin indent on
 set expandtab
 set ruler
