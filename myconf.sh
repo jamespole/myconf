@@ -63,7 +63,7 @@ elif [ "${system}" = 'macOS' ]; then
 elif [ "${system}" = 'Arch' ]; then
     sudo pacman -Syu || exit 2
     # NOTE: Do not install shellcheck on Arch. It installs too many dependencies.
-    sudo pacman -S \
+    sudo pacman -S --needed \
         bash \
         borg \
         fdupes \
