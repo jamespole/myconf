@@ -48,15 +48,19 @@ if [ "${system}" = 'Debian' ]; then
 elif [ "${system}" = 'macOS' ]; then
     for unneeded_package in ${unneeded_packages}; do
         if brew list "${unneeded_package}" > /dev/null 2>&1; then
-            # shellcheck disable=SC2086
-            brew uninstall ${unneeded_package} || exit 2
+            brew uninstall "${unneeded_package}" || exit 2
         else
-            echo "INFO: Homebrew package <${unneeded_package}> not installed. Skipping."
+            echo "INFO: Package <${unneeded_package}> not installed. Skipping."
         fi
     done
 elif [ "${system}" = 'Arch' ]; then
-    # shellcheck disable=SC2086
-    sudo pacman -Rs ${unneeded_packages} || exit 2
+    for unneeded_package in ${unneeded_packages}; do
+        if pacman -Q "${unneeded_package}" > /dev/null 2>&1; then            
+            sudo pacman -Rs "${unneeded_package}" || exit 2
+        else
+            echo "INFO: Package <${unneeded_package}> not installed. Skipping."
+        fi
+    done
 fi
 
 #
