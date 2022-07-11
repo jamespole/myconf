@@ -81,15 +81,17 @@ fi
 # Install packages
 #
 
+arch_packages='bash borg fdupes jhead rsync sudo vim'
+debian_packages='rsync vim'
+# For macOS use system bash, rsync, sudo, vim
+macos_packages='bash-completion borgbackup fdupes ffmpeg jhead shellcheck'
+
 if [ "${system}" = 'Debian' ]; then
-    sudo apt install -y \
-        rsync \
-        shellcheck \
-        vim \
-        || exit 2
+    # shellcheck disable=SC2086
+    sudo apt install -y ${debian_packages} || exit 2
     sudo apt autoremove -y || exit 2
 elif [ "${system}" = 'macOS' ]; then
-    for brew_package in bash-completion borgbackup fdupes ffmpeg jhead rsync shellcheck; do
+    for brew_package in ${macos_packages}; do
         if brew list "$brew_package" > /dev/null 2>&1; then
             echo "INFO: Homebrew package <${brew_package}> already installed. Skipping."
         else
@@ -98,16 +100,8 @@ elif [ "${system}" = 'macOS' ]; then
         fi
     done
 elif [ "${system}" = 'Arch' ]; then
-    # NOTE: Do not install {ffmpeg,shellcheck} on Arch. It installs too many dependencies.
-    sudo pacman -S --needed \
-        bash \
-        borg \
-        fdupes \
-        jhead \
-        rsync \
-        sudo \
-        vim \
-        || exit 2
+    # shellcheck disable=SC2086
+    sudo pacman -S --needed ${arch_packages} || exit 2
 fi
 
 #
