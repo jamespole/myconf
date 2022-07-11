@@ -85,7 +85,7 @@ if [ "${system}" = 'Debian' ]; then
         || exit 2
     sudo apt autoremove -y || exit 2
 elif [ "${system}" = 'macOS' ]; then
-    for brew_package in borgbackup fdupes ffmpeg jhead rsync shellcheck; do
+    for brew_package in bash-completion borgbackup fdupes ffmpeg jhead rsync shellcheck; do
         if brew list "$brew_package" > /dev/null 2>&1; then
             echo "INFO: Homebrew package <${brew_package}> already installed. Skipping."
         else
@@ -130,6 +130,10 @@ alias ls="ls -GF"
 alias more="less"
 alias vi="vim"
 alias view="vim"
+
+if [ "x${BASH_COMPLETION_VERSINFO-}" = x ]; then
+    [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+fi
 
 PS1="\[\e[0;1;31m\] [\u@\H] \[\e[34m\]{\w} \[\e[0m\]\n\$ "
 EOF
