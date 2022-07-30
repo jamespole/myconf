@@ -86,7 +86,8 @@ fi
 arch_packages='bash borg fdupes jhead rsync sudo vim'
 debian_packages='rsync vim'
 # For macOS use system bash, rsync, sudo, vim
-macos_packages='bash-completion borgbackup fdupes ffmpeg jhead shellcheck'
+# macOS: Do not use system rsync as it is slow.
+macos_packages='bash-completion borgbackup fdupes ffmpeg jhead rsync shellcheck'
 
 if [ "${system}" = 'Debian' ]; then
     # shellcheck disable=SC2086
