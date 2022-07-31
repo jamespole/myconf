@@ -84,7 +84,7 @@ fi
 #
 
 arch_packages='bash borg fdupes jhead rsync sudo vim'
-debian_packages='rsync vim'
+debian_packages='firewalld rsync vim'
 # For macOS use system bash, rsync, sudo, vim
 # macOS: Do not use system rsync as it is slow. (TODO: Benchmark system vs brew rsync)
 macos_packages='bash-completion borgbackup fdupes ffmpeg jhead rsync shellcheck testssl vnu'
