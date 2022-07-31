@@ -132,6 +132,12 @@ alias more="less"
 alias vi="vim"
 alias view="vim"
 
+if command -v wget > /dev/null 2>&1 ; then
+    alias myconf='/bin/sh -c "$(wget -q -O - -- https://raw.githubusercontent.com/jamespole/myconf/main/myconf.sh)"'
+elif command -v curl > /dev/null 2>&1 ; then
+    alias myconf='/bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/jamespole/myconf/main/myconf.sh)"'
+fi
+
 if [ "x${BASH_COMPLETION_VERSINFO-}" = x ]; then
     [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 fi
