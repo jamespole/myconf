@@ -176,7 +176,7 @@ else
 fi
 
 #
-# Install sshd configuration
+# Configure and restart sshd
 #
 
 if [ "${system}" = 'Debian' ] && [ -d '/etc/ssh/sshd_config.d/' ]; then
@@ -184,6 +184,7 @@ if [ "${system}" = 'Debian' ] && [ -d '/etc/ssh/sshd_config.d/' ]; then
     sudo firewall-cmd --zone=public --remove-service=ssh
     sudo firewall-cmd --zone=public --add-port=2222/tcp
     sudo firewall-cmd --runtime-to-permanent
+    sudo systemctl restart sshd
 fi
 
 #
