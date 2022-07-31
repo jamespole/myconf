@@ -175,6 +175,9 @@ fi
 
 if [ "${system}" = 'Debian' ] && [ -d '/etc/ssh/sshd_config.d/' ]; then
     echo "Port 2222" | sudo tee /etc/ssh/sshd_config.d/myconf.conf
+    sudo firewall-cmd --zone=public --remove-service=ssh
+    sudo firewall-cmd --zone=public --add-port=2222/tcp
+    sudo firewall-cmd --runtime-to-permanent
 fi
 
 #
