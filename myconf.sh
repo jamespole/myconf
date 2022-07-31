@@ -170,6 +170,14 @@ else
 fi
 
 #
+# Install sshd configuration
+#
+
+if [ "${system}" = 'Debian' ] && [ -d '/etc/ssh/sshd_config.d/' ]; then
+    echo "Port 2222" | sudo tee /etc/ssh/sshd_config.d/myconf.conf
+fi
+
+#
 # Finished
 #
 
